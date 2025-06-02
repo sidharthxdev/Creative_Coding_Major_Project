@@ -12,7 +12,7 @@ function draw() {
 
   noStroke();
 
-  //blue area
+//blue area
   
   fill("blue")
   rect(0, 0, 400, 300)
@@ -31,20 +31,36 @@ function draw() {
   fill("yellow")
   rect(0, 300, 350, 440)
   
+  
 // orange area
 
   fill("#FF9800")
   rect(200, 400, 400, 250)
+
   
 // pink area
   
   fill("#E91E63")
   rect(200, 200, 400, 200)
 
+// extension layer
+  
+  fill("yellow")
+  ellipse(0, 270, 350, 180);
+  
+  fill("#FF9800")
+  ellipse(400, 400, 400, 200);
+  
+  
+  //overlay part
+  
   fill("#E91E63")
   ellipse(200, 270, 350, 180);
   
   fill("#E91E63")
   ellipse(250, 200, 200, 100);
+  
+  fill("yellow")
+  ellipse(150, 500, 300, 200);
   
 }
