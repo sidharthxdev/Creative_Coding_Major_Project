@@ -1,11 +1,5 @@
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  noLoop();
-}
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  redraw();
+  createCanvas(750, 500);
 }
 
 function draw() {
