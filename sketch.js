@@ -1,11 +1,5 @@
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  noLoop();
-}
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  redraw();
+  createCanvas(750, 500);
 }
 
 function draw() {
@@ -13,6 +7,7 @@ function draw() {
   noStroke();
 
 //blue area
+  
   fill("blue")
   rect(0, 0, 400, 300)
 
@@ -20,11 +15,13 @@ function draw() {
   fill("#F71B0B")
   rect(250, 0, 500, 250)
 
+  
 //yellow area
   
   fill("yellow")
   rect(0, 300, 350, 440)
 
+  
 //purple area
   
 // this coding learnt from website p5.js
@@ -76,12 +73,14 @@ pop();
    ellipse(0,0,170,40)
 pop();
   
+
   push();
    translate(200, 260);
    rotate(radians(120));
    fill("#E91E63");
    ellipse(0, 0, 250, 170);
 pop();
+  
   
   fill("#E91E63")
   rotate(25)
