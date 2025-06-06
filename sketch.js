@@ -1,6 +1,6 @@
 // Declared two circle objects 
-let circle1;
-let circle2;
+let circlecora1;
+let circlecora2;
 
 function setup() {
   createCanvas(750, 500); // Set canvas size
@@ -15,10 +15,10 @@ function setup() {
   ];
 
   // the first large patterned circle is placed near blue/yellow/pink areas
-  circle1 = new PatternedCircle(140, 300, 100, fullPalette);
+  circlecora1 = new PatternedCircle(140, 300, 100, fullPalette);
 
   // then the second smaller circle placed top-right using a different color combo
-  circle2 = new PatternedCircle(540, 150, 70, fullPalette.slice(8, 16));
+  circlecora2 = new PatternedCircle(540, 150, 70, fullPalette.slice(8, 16));
 }
 
 function draw() {
@@ -102,8 +102,8 @@ function draw() {
   pop();
 
   // drew both circles
-  circle1.drawLayeredPacitaCircle(); // First large one
-  circle2.drawLayeredPacitaCircle(); // Second small one
+  circlecora1.drawLayeredPacitaCircle(); // First large one
+  circlecora2.drawLayeredPacitaCircle(); // Second small one
 }
 
 // used class to create pacita-style patterned circles
