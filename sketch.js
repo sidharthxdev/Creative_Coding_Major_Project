@@ -3,6 +3,16 @@ function setup() {
 }
 
 function draw() {
+  drawBackground();
+  drawCircleKristien1();
+  drawCircleKristien2();
+  drawCircleCola1();
+  drawCircleCola2();
+  drawCircleYin1();
+  drawCircleSid1();  
+}
+
+function drawBackground() {
 
   noStroke();
 
@@ -38,7 +48,7 @@ pop();
   
 // pink area
   
-  fill("#E91E63")
+  fill("#EB306F")
   rect(200, 200, 400, 200,30, 30, 30, 10)
   
   //overlay part
@@ -46,7 +56,7 @@ pop();
  push();
   translate(500, 300);
   rotate(radians(160));
-  fill("#E91E63");
+  fill("#EB306F");
   rect(-150, -120, 300, 200, 100, 30, 100, 10);
 pop();
   
@@ -73,11 +83,11 @@ pop();
   push();
    translate(200, 260);
    rotate(radians(120));
-   fill("#E91E63");
+   fill("#EB306F");
    ellipse(0, 0, 250, 170);
 pop();
   
-  fill("#E91E63")
+  fill("#EB306F")
   rotate(25)
   ellipse(250, 230, 200, 160);
   
