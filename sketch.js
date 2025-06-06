@@ -3,11 +3,20 @@ function setup() {
 }
 
 function draw() {
+  drawBackground();
+  drawCircleKristien1();
+  drawCircleKristien2();
+  drawCircleCola1();
+  drawCircleCola2();
+  drawCircleYin1();
+  drawCircleSid1();  
+}
 
-  noStroke();
+function drawBackground() {
+
+noStroke();
 
 //blue area
-  
   fill("blue")
   rect(0, 0, 400, 300)
 
@@ -15,13 +24,11 @@ function draw() {
   fill("#F71B0B")
   rect(250, 0, 500, 250)
 
-  
 //yellow area
   
   fill("yellow")
   rect(0, 300, 350, 440)
 
-  
 //purple area
   
 // this coding learnt from website p5.js
@@ -41,7 +48,7 @@ pop();
   
 // pink area
   
-  fill("#E91E63")
+  fill("#EB306F")
   rect(200, 200, 400, 200,30, 30, 30, 10)
   
   //overlay part
@@ -49,7 +56,7 @@ pop();
  push();
   translate(500, 300);
   rotate(radians(160));
-  fill("#E91E63");
+  fill("#EB306F");
   rect(-150, -120, 300, 200, 100, 30, 100, 10);
 pop();
   
@@ -73,16 +80,14 @@ pop();
    ellipse(0,0,170,40)
 pop();
   
-
   push();
    translate(200, 260);
    rotate(radians(120));
-   fill("#E91E63");
+   fill("#EB306F");
    ellipse(0, 0, 250, 170);
 pop();
   
-  
-  fill("#E91E63")
+  fill("#EB306F")
   rotate(25)
   ellipse(250, 230, 200, 160);
   
@@ -100,4 +105,178 @@ pop();
   ellipse(0, 0, 350, 180);
 pop();
   
+}
+
+function drawCircleKristien1(){
+noStroke();
+  
+  fill("rgb(240,248,108)")
+  circle(500,160,130)
+  
+  fill("#4B99F8E0")
+  circle(500,160,120)
+  
+  fill("#fc558b")
+  circle(500,160,110)
+  
+  fill("#f1b62e")
+  circle(500,160,100)
+  
+  fill("#4B99F8E0")
+  circle(500,160,90)
+  
+  fill("#222222")
+  circle(500,160,80)
+  
+  fill("#fc558b")
+  circle(500,160,30)
+  
+//sunray (x,y, inner,outer, count, colorName, weight)
+  drawSunRays(500, 160, 60, 90, 40, '#E7DFDF', 2);
+
+//generate point within the circle
+  drawCirclePoints(500, 160, 80, 40, 'purple',10);
+  drawCirclePoints(500, 160, 70, 40, 'deepskyblue', 6);
+  drawCirclePoints(500, 160, 60, 20, '#e74a1f', 10);
+  drawCirclePoints(500, 160, 50, 30, 'deepskyblue', 6);
+  drawCirclePoints(500, 160, 40, 15, ' #6f6dc1', 10);
+  drawCirclePoints(500, 160, 30, 30, 'deepskyblue', 6);
+
+// inner circle snail shell 
+  drawSpiral(500, 160, 0.8, 5 * TWO_PI); // like a snail shell
+
+}
+
+function drawSunRays(cx, cy, innerR, outerR, count, colorName, weight) {
+  stroke(colorName);
+  strokeWeight(weight);
+
+  for (let i = 0; i < count; i++) {
+    let angle = i * TWO_PI / count;
+    let x1 = cx + innerR * cos(angle);
+    let y1 = cy + innerR * sin(angle);
+    let x2 = cx + outerR * cos(angle);
+    let y2 = cy + outerR * sin(angle);
+    line(x1, y1, x2, y2);
+  }
+}
+
+function drawCirclePoints(cx, cy, r, count, colorName, weight) {
+  stroke(colorName);
+  strokeWeight(weight);
+
+  for (let i = 0; i < count; i++) {
+    let angle = i * (TWO_PI / count); 
+//divides the circle into equal slices and each individual point is evenly spaced around the circle
+    let radius = r;
+// all the points will lie exactly on the circle with radius r, and form a perfect ring.
+    let x = cx + radius * cos(angle);
+    let y = cy + radius * sin(angle);
+    point(x, y);
+  }
+}
+
+function drawSpiral(cx, cy, k, maxAngle) {
+  noFill();
+  stroke('#ffffff');
+  strokeWeight(2);
+
+  beginShape();
+  for (let angle = 0; angle < maxAngle; angle += 0.05) {
+    let r = k * angle;
+    let x = cx + r * cos(angle);
+    let y = cy + r * sin(angle);
+    vertex(x, y);// reference: https://p5js.org/reference/p5/vertex/, learn from p5.js website
+  }
+  endShape();
+}
+
+/*function drawCircleKristien1(){
+  noStroke();
+  
+  fill("rgb(240,248,108)")
+  circle(500,300,220)
+  
+  fill("#4B99F8E0")
+  circle(500,300,210)
+  
+  fill("#fc558b")
+  circle(500,300,200)
+  
+  fill("#f1b62e")
+  circle(500,300,190)
+  
+  fill("#4B99F8E0")
+  circle(500,300,180)
+  
+  fill("#222222")
+  circle(500,300,160)
+  
+  fill("#fc558b")
+  circle(500,300,50)
+  
+//sunray (x,y, inner,outer, count, colorName, weight)
+  drawSunRays(500, 300, 110, 150, 40, '#E7DFDF', 2);
+
+//generate point within the circle
+  drawCirclePoints(500, 300, 80, 40, 'purple',10);
+  drawCirclePoints(500, 300, 70, 40, 'deepskyblue', 6);
+  drawCirclePoints(500, 300, 60, 20, '#e74a1f', 10);
+  drawCirclePoints(500, 300, 50, 30, 'deepskyblue', 6);
+  drawCirclePoints(500, 300, 40, 15, ' #6f6dc1', 10);
+  drawCirclePoints(500, 300, 30, 30, 'deepskyblue', 6);
+
+// inner circle snail shell 
+  drawSpiral(500, 300, 0.8, 5 * TWO_PI); // like a snail shell
+
+}
+
+function drawSunRays(cx, cy, innerR, outerR, count, colorName, weight) {
+  stroke(colorName);
+  strokeWeight(weight);
+
+  for (let i = 0; i < count; i++) {
+    let angle = i * TWO_PI / count;
+    let x1 = cx + innerR * cos(angle);
+    let y1 = cy + innerR * sin(angle);
+    let x2 = cx + outerR * cos(angle);
+    let y2 = cy + outerR * sin(angle);
+    line(x1, y1, x2, y2);
+  }
+}
+
+function drawCirclePoints(cx, cy, r, count, colorName, weight) {
+  stroke(colorName);
+  strokeWeight(weight);
+
+  for (let i = 0; i < count; i++) {
+    let angle = i * (TWO_PI / count); 
+//divides the circle into equal slices and each individual point is evenly spaced around the circle
+    let radius = r;
+// all the points will lie exactly on the circle with radius r, and form a perfect ring.
+    let x = cx + radius * cos(angle);
+    let y = cy + radius * sin(angle);
+    point(x, y);
+  }
+}
+
+function drawSpiral(cx, cy, k, maxAngle) {
+  noFill();
+  stroke('#ffffff');
+  strokeWeight(2);
+
+  beginShape();
+  for (let angle = 0; angle < maxAngle; angle += 0.05) {
+    let r = k * angle;
+    let x = cx + r * cos(angle);
+    let y = cy + r * sin(angle);
+    vertex(x, y);// reference: https://p5js.org/reference/p5/vertex/, learn from p5.js website
+  }
+  endShape();
+
+}*/
+
+
+function drawCircleKristien2(){
+
 }
