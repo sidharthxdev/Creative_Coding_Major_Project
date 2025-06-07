@@ -103,7 +103,6 @@ pop();
   fill("yellow")
   ellipse(0, 0, 350, 180);
 pop();
-  
 }
 
 //[Yin] Draw a multi‐layered circle with each layer corresponds to one ring of the cicle, using dots, rectangle, zigzags, squares, beams and stitching like wavy lines inspired by pacita abad's artwork.
