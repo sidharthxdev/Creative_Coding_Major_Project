@@ -8,7 +8,7 @@ Following the same and keeping the existing provided code in the lecture */
   - Color palettes and patterns are adapted from the code made by team members
 */
 
-let balls = []; // Array to hold all our cirles
+let circlepattern = []; // Array to hold all our cirles
 
 // Color palette for Cora's circles
 const fullPalette = [
@@ -18,69 +18,75 @@ const fullPalette = [
   "#FF3D00", "#FF4081", "#004D61", "#A67C52", "#E1BEE7", "#103A44"
 ];
 
-const numberOfballs = 50;
+const numberofcircle = 64;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-    // for loop to create 50 balls, randomly assigning each a pattern type
-  for (let i = 0; i < numberOfballs; i++) {
-    let paletteStart = floor(random(0, fullPalette.length - 6));
+    // for loop to create 64 circlepattern, randomly assigning each a pattern type
+  for (let i = 0; i < numberofcircle; i++) {
+    // Selecting a random starting palette, ensuring at least 6 colors are available
+    let paletteStart = floor(random(0, fullPalette.length - 6));     
     let palette = fullPalette.slice(paletteStart, paletteStart + 6);
+     // Randomly positioning the circle within the central half of the window
     let x = random(width/4, 3*width/4);
     let y = random(height/4, 3*height/4);
-    let r = random(30, 60);
+        // Randomly assign a radius between 60 and 120 for the circle
+    let r = random(48, 64); // Increased size here from team feedback session
 
-    let rand = random();
+    let rand = random();    // Randomly choose pattern type for the circle
     if (rand < 0.25) {
-      balls.push(new Ball(x, y, r, palette)); // Cora's artwork pattern
+     circlepattern.push(new criclepattern(x, y, r, palette)); // Cora's artwork pattern
     } else if (rand < 0.5) {
-      balls.push(new YinPatternBall(x, y, r)); // Yin's artwork pattern
+     circlepattern.push(new YinPatterncriclepattern(x, y, r)); // Yin's artwork pattern
     } else if (rand < 0.75) {
-      balls.push(new KristienPattern1Ball(x, y, r)); // Kristien's pattern 1
+     circlepattern.push(new KristienPattern1criclepattern(x, y, r)); // Kristien's circle pattern 1
     } else {
-      balls.push(new KristienPattern2Ball(x, y, r)); // Kristien's pattern 2
+     circlepattern.push(new KristienPattern2criclepattern(x, y, r)); // Kristien's circle pattern 2
     }
   }
 }
 
-/*used the same code from the lecture material of Week 9 for the responisve design 
-which repositions cirlces if they go out of bounds after resizing*/
+/*used the code from the lecture material of Week 9 for the responisve design 
+which repositions the cirlce patterns if they go out of frame after resizing*/
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  for (let ball of balls) {
-    if (ball.ballXPos > width || ball.ballXPos < 0) {
-      ball.ballXPos = random(width / 4, (3 * width) / 4);
+   // Lfor loop for repositioning the circles if they are out of frame after resizing
+  for (let criclepattern of circlepattern) {
+    if (criclepattern.criclepatternXPos > width || criclepattern.criclepatternXPos < 0) {
+      criclepattern.criclepatternXPos = random(width / 4, (3 * width) / 4);
     }
-    if (ball.ballYPos > height || ball.ballYPos < 0) {
-      ball.ballYPos = random(height / 4, (3 * height) / 4);
+    if (criclepattern.criclepatternYPos > height || criclepattern.criclepatternYPos < 0) {
+      criclepattern.criclepatternYPos = random(height / 4, (3 * height) / 4);
+// If the circle's x and y position is out of frame, it resets to a random position in the central half
     } 
   }
 }
 
 function draw() {
   background(0);
-  for (let ball of balls) {
-    ball.move();
-    ball.display();
+  for (let criclepattern of circlepattern) {
+    criclepattern.move();
+    criclepattern.display();
   }
 }
 
-// PatternedCircle class (Cora's pattern)
+// Class for the patterned circles(Cora's pattern)
 class PatternedCircle {
   constructor(x, y, r, palette) {
+      // Storing the position, radius, and color palette for this circle
     this.x = x;             
     this.y = y;             
     this.r = r;             
     this.palette = palette; 
   }
 
-  drawLayeredPacitaCircle() {
+  drawPatternedCircle() {
     push(); 
-    translate(this.x, this.y); 
+    translate(this.x, this.y); // Move the origin to the circle's position
 
-    // white base background 
-    fill("white");
+    // base background for the circle
+    fill("black");
     ellipse(0, 0, this.r * 2);
 
     // center black + green circles 
@@ -89,16 +95,16 @@ class PatternedCircle {
     fill("green");
     ellipse(0, 0, this.r * 0.25);
 
-    // rainbow ring outlines
+    // ring outlines
     noFill();
     strokeWeight(4);
-    let ringColors = this.palette.slice(0, 6);
+    let ringColors = this.palette.slice(0, 6); // palette for ring colors
     for (let i = 0; i < ringColors.length; i++) {
       stroke(ringColors[i]);
-      ellipse(0, 0, this.r * (0.5 + 0.1 * i)); 
+      ellipse(0, 0, this.r * (0.5 + 0.1 * i)); // Drawing the colored rings
     }
 
-    // dotted outer rings 
+    // dotted outer circle pattern 
     let layers = 5;                          
     let startRadius = this.r * 0.55;        
     let endRadius = this.r * 0.95;           
@@ -108,6 +114,7 @@ class PatternedCircle {
 
     noStroke();
 
+    // for loop to draw dotted rings with varying radii and colors
     for (let l = 0; l < layers; l++) {
       let radius = startRadius + l * step;
       let dotSize = min(maxDotSize, TWO_PI * radius / 20);
@@ -121,80 +128,90 @@ class PatternedCircle {
         ellipse(x, y, dotSize);
       }
     }
-    pop(); 
+    pop(); //Restore back to the drawing state
   }
 }
 
-// Ball class (Pacita pattern)
-class Ball {
+// criclepattern class (Yin's circle pattern)
+class criclepattern {
   constructor(starterXPos, starterYPos, starterRadius, palette) {
-    this.ballXPos = starterXPos;
-    this.ballYPos = starterYPos;
-    this.ballRadius = starterRadius;
-    this.ballXSpeed = random(-5, 5);
-    this.ballYSpeed = random(-5, 5);
+    // Initialising the circle position, radius, speed, and its pattern
+    this.criclepatternXPos = starterXPos;
+    this.criclepatternYPos = starterYPos;
+    this.criclepatternRadius = starterRadius;
+    this.criclepatternXSpeed = random(-5, 5);
+    this.criclepatternYSpeed = random(-5, 5);
     this.patternedCircle = new PatternedCircle(
-      this.ballXPos, this.ballYPos, this.ballRadius, palette
+      this.criclepatternXPos, this.criclepatternYPos, this.criclepatternRadius, palette
     );
   }
 
   move() {
-    this.ballXPos += this.ballXSpeed;
-    this.ballYPos += this.ballYSpeed;
+    // Updatig the position of circle with the speed
+    this.criclepatternXPos += this.criclepatternXSpeed;
+    this.criclepatternYPos += this.criclepatternYSpeed;
 
-    if (this.ballXPos + this.ballXSpeed + this.ballRadius / 2 > width 
-      || this.ballXPos + this.ballXSpeed - this.ballRadius / 2 < 0) {
-      this.ballXSpeed *= -1;
+    // Bounce off left/right edges
+    if (this.criclepatternXPos + this.criclepatternXSpeed + this.criclepatternRadius / 2 > width 
+      || this.criclepatternXPos + this.criclepatternXSpeed - this.criclepatternRadius / 2 < 0) {
+      this.criclepatternXSpeed *= -1;
     }
-    if (this.ballYPos + this.ballRadius / 2 > height 
-      || this.ballYPos - this.ballRadius / 2 < 0) {
-      this.ballYSpeed *= -1;
+      // Bounce off top/bottom edges
+    if (this.criclepatternYPos + this.criclepatternRadius / 2 > height 
+      || this.criclepatternYPos - this.criclepatternRadius / 2 < 0) {
+      this.criclepatternYSpeed *= -1;
     }
   }
 
   display() {
     // Update the PatternedCircle's position before drawing
-    this.patternedCircle.x = this.ballXPos;
-    this.patternedCircle.y = this.ballYPos;
-    this.patternedCircle.r = this.ballRadius;
-    this.patternedCircle.drawLayeredPacitaCircle();
+    this.patternedCircle.x = this.criclepatternXPos;
+    this.patternedCircle.y = this.criclepatternYPos;
+    this.patternedCircle.r = this.criclepatternRadius;
+    this.patternedCircle.drawPatternedCircle();
   }
 }
 
-// YinPatternBall class (Yin pattern)
-class YinPatternBall {
+// YinPattern pattern class (Yin pattern)
+class YinPatterncriclepattern {
   constructor(x, y, r) {
-    this.ballXPos = x;
-    this.ballYPos = y;
-    this.ballRadius = r;
-    this.ballXSpeed = random(-5, 5);
-    this.ballYSpeed = random(-5, 5);
+    // Initialize ball position, radius, and speed
+    this.criclepatternXPos = x;
+    this.criclepatternYPos = y;
+    this.criclepatternRadius = r;
+    this.criclepatternXSpeed = random(-5, 5);
+    this.criclepatternYSpeed = random(-5, 5);
   }
 
   move() {
-    this.ballXPos += this.ballXSpeed;
-    this.ballYPos += this.ballYSpeed;
+    // Update the position of the circles by speed
+    this.criclepatternXPos += this.criclepatternXSpeed;
+    this.criclepatternYPos += this.criclepatternYSpeed;
 
-    if (this.ballXPos + this.ballXSpeed + this.ballRadius / 2 > width 
-      || this.ballXPos + this.ballXSpeed - this.ballRadius / 2 < 0) {
-      this.ballXSpeed *= -1;
+   // Bounce off left/right edges
+    if (this.criclepatternXPos + this.criclepatternXSpeed + this.criclepatternRadius / 2 > width 
+      || this.criclepatternXPos + this.criclepatternXSpeed - this.criclepatternRadius / 2 < 0) {
+      this.criclepatternXSpeed *= -1;
     }
-    if (this.ballYPos + this.ballRadius / 2 > height 
-      || this.ballYPos - this.ballRadius / 2 < 0) {
-      this.ballYSpeed *= -1;
+    // Bounce off top/bottom edges
+    if (this.criclepatternYPos + this.criclepatternRadius / 2 > height 
+      || this.criclepatternYPos - this.criclepatternRadius / 2 < 0) {
+      this.criclepatternYSpeed *= -1;
     }
   }
 
   display() {
-    drawCircleYin1(this.ballXPos, this.ballYPos, this.ballRadius);
+    drawCircleYin1(this.criclepatternXPos, this.criclepatternYPos, this.criclepatternRadius);
   }
 }
 
-// Yin pattern function from your friend's code
+// Pattern function from Yin's code
 function drawCircleYin1(cx, cy, radius) {
+  // Fucntion to draw the pink circle
   noStroke();
   fill('#F764AD');
   circle(cx, cy, radius * 0.3);
+  // green dots around the center
   noStroke();
   fill('#8FC79B');
   for (let i = 0; i < 28; i++) {
@@ -203,6 +220,7 @@ function drawCircleYin1(cx, cy, radius) {
     let y = cy + radius*.3 * sin(angle);
     circle(x, y, radius * 0.05);
   }
+    // blue dots in a larger ring
   fill('#048A9D');
   for (let i = 0; i < 18; i++) {
     let angle = TWO_PI * i/18 + 0.1;
@@ -210,6 +228,8 @@ function drawCircleYin1(cx, cy, radius) {
     let y = cy + radius*0.4 * sin(angle);
     circle(x, y, radius * 0.1);
   }
+
+  //colored beams radiating out from the center
   let beamCount = 30;
   let beamColors = ['#F4B205','#E12C25','#4FC3F7','#8FC79B','#081487'];
   let innerR = radius * 0.45;
@@ -229,6 +249,7 @@ function drawCircleYin1(cx, cy, radius) {
     let y4 = cy + innerR * sin(endA);
     quad(x1, y1, x2, y2, x3, y3, x4, y4);
   }
+  //blue wavy outlines around the circle
   stroke('#457B9D');
   strokeWeight(1);
   noFill();
@@ -244,6 +265,7 @@ function drawCircleYin1(cx, cy, radius) {
     }
     endShape();
   }
+  // pink rectangles in a circle 
   noStroke();
   fill('#F495AF');
   for (let i = 0; i < 30; i++) {
@@ -257,6 +279,7 @@ function drawCircleYin1(cx, cy, radius) {
       rect(0, 0, radius*0.08, radius*0.1);
     pop();
   }
+  // yellow wavy outline
   stroke('#F4B205');
   strokeWeight(2);
   noFill();
@@ -273,6 +296,7 @@ function drawCircleYin1(cx, cy, radius) {
     vertex(x, y);
   }
   endShape(CLOSE);
+  // yellow dots (outsie the circle)
   noStroke();
   fill('#D2D39B');
   for (let i = 0; i < 36; i++) {
@@ -283,67 +307,77 @@ function drawCircleYin1(cx, cy, radius) {
   }
 }
 
-// --- Kristien Pattern 1 Ball ---
-class KristienPattern1Ball {
+// Kristen's circle pattern 01
+class KristienPattern1criclepattern {
   constructor(x, y, r) {
-    this.ballXPos = x;
-    this.ballYPos = y;
-    this.ballRadius = r;
-    this.ballXSpeed = random(-5, 5);
-    this.ballYSpeed = random(-5, 5);
+    // Initialising the circle position, radius, and speed
+    this.criclepatternXPos = x;
+    this.criclepatternYPos = y;
+    this.criclepatternRadius = r;
+    this.criclepatternXSpeed = random(-5, 5);
+    this.criclepatternYSpeed = random(-5, 5);
   }
 
   move() {
-    this.ballXPos += this.ballXSpeed;
-    this.ballYPos += this.ballYSpeed;
-
-    if (this.ballXPos + this.ballXSpeed + this.ballRadius / 2 > width 
-      || this.ballXPos + this.ballXSpeed - this.ballRadius / 2 < 0) {
-      this.ballXSpeed *= -1;
+    // Updating position by speed
+    this.criclepatternXPos += this.criclepatternXSpeed;
+    this.criclepatternYPos += this.criclepatternYSpeed;
+    
+    // Bounce off left/right edges
+    if (this.criclepatternXPos + this.criclepatternXSpeed + this.criclepatternRadius / 2 > width 
+      || this.criclepatternXPos + this.criclepatternXSpeed - this.criclepatternRadius / 2 < 0) {
+      this.criclepatternXSpeed *= -1;
     }
-    if (this.ballYPos + this.ballRadius / 2 > height 
-      || this.ballYPos - this.ballRadius / 2 < 0) {
-      this.ballYSpeed *= -1;
+
+    // Bounce off top/bottom edges
+    if (this.criclepatternYPos + this.criclepatternRadius / 2 > height 
+      || this.criclepatternYPos - this.criclepatternRadius / 2 < 0) {
+      this.criclepatternYSpeed *= -1;
     }
   }
 
   display() {
-    drawCircleKristien1(this.ballXPos, this.ballYPos, this.ballRadius);
+    // Draws Kristien's first circle pattern
+    drawCircleKristien1(this.criclepatternXPos, this.criclepatternYPos, this.criclepatternRadius);
   }
 }
 
-// --- Kristien Pattern 2 Ball ---
-class KristienPattern2Ball {
+// Kristie's Circle pattern 02
+class KristienPattern2criclepattern {
   constructor(x, y, r) {
-    this.ballXPos = x;
-    this.ballYPos = y;
-    this.ballRadius = r;
-    this.ballXSpeed = random(-5, 5);
-    this.ballYSpeed = random(-5, 5);
+    this.criclepatternXPos = x;
+    this.criclepatternYPos = y;
+    this.criclepatternRadius = r;
+    this.criclepatternXSpeed = random(-5, 5);
+    this.criclepatternYSpeed = random(-5, 5);
   }
 
   move() {
-    this.ballXPos += this.ballXSpeed;
-    this.ballYPos += this.ballYSpeed;
+    // Update position by speed
+    this.criclepatternXPos += this.criclepatternXSpeed;
+    this.criclepatternYPos += this.criclepatternYSpeed;
 
-    if (this.ballXPos + this.ballXSpeed + this.ballRadius / 2 > width 
-      || this.ballXPos + this.ballXSpeed - this.ballRadius / 2 < 0) {
-      this.ballXSpeed *= -1;
+    // Bounce off left/right edges
+    if (this.criclepatternXPos + this.criclepatternXSpeed + this.criclepatternRadius / 2 > width 
+      || this.criclepatternXPos + this.criclepatternXSpeed - this.criclepatternRadius / 2 < 0) {
+      this.criclepatternXSpeed *= -1;
     }
-    if (this.ballYPos + this.ballRadius / 2 > height 
-      || this.ballYPos - this.ballRadius / 2 < 0) {
-      this.ballYSpeed *= -1;
+    // Bounce off top/bottom edges
+    if (this.criclepatternYPos + this.criclepatternRadius / 2 > height 
+      || this.criclepatternYPos - this.criclepatternRadius / 2 < 0) {
+      this.criclepatternYSpeed *= -1;
     }
   }
 
   display() {
-    // The original Kristien2 function uses width/height, so pass r for both
-    drawCircleKristien2(this.ballXPos - this.ballRadius/2, this.ballYPos - this.ballRadius/2, this.ballRadius, this.ballRadius * 0.65);
+    // Draws Kristien's 2nd circle pattern
+    drawCircleKristien2(this.criclepatternXPos - this.criclepatternRadius/2, this.criclepatternYPos - this.criclepatternRadius/2, this.criclepatternRadius, this.criclepatternRadius * 0.65);
   }
 }
 
-// --- Kristien Pattern 1 Function ---
+// Function for Kristen's first circle pattern
 function drawCircleKristien1(cx = 500, cy = 160, r = 130) {
+  // concentric colored circles
   noStroke();
   fill("rgb(240,248,108)");
   circle(cx, cy, r);
@@ -360,13 +394,16 @@ function drawCircleKristien1(cx = 500, cy = 160, r = 130) {
   fill("#fc558b");
   circle(cx, cy, r - 100);
 
+  //sun rays radiating from the center
   drawSunRays(cx, cy, r * 0.46, r * 0.69, 40, '#E7DFDF', 2);
+  //rings of colored points
   drawCirclePoints(cx, cy, r * 0.31, 40, 'purple', 10);
   drawCirclePoints(cx, cy, r * 0.27, 40, 'deepskyblue', 6);
   drawCirclePoints(cx, cy, r * 0.23, 20, '#e74a1f', 10);
   drawCirclePoints(cx, cy, r * 0.19, 30, 'deepskyblue', 6);
   drawCirclePoints(cx, cy, r * 0.15, 15, ' #6f6dc1', 10);
   drawCirclePoints(cx, cy, r * 0.12, 30, 'deepskyblue', 6);
+  //white spiral in the center
   drawSpiral(cx, cy, 0.8, 5 * TWO_PI);
 }
 
@@ -388,6 +425,7 @@ function drawCirclePoints(cx, cy, r, count, colorName, weight) {
   strokeWeight(weight);
   for (let i = 0; i < count; i++) {
     let angle = i * (TWO_PI / count); 
+    //divides the circle into equal slices and each individual point is evenly spaced around the circle
     let x = cx + r * cos(angle);
     let y = cy + r * sin(angle);
     point(x, y);
@@ -395,6 +433,7 @@ function drawCirclePoints(cx, cy, r, count, colorName, weight) {
 }
 
 function drawSpiral(cx, cy, k, maxAngle) {
+  // Draws a spiral starting at (cx, cy) with growth factor k up to maxAngle
   noFill();
   stroke('#ffffff');
   strokeWeight(2);
@@ -410,6 +449,7 @@ function drawSpiral(cx, cy, k, maxAngle) {
 
 // --- Kristien Pattern 2 Function ---
 function drawCircleKristien2(x, y, w, h) {
+  // Calculating center and the frame dimensions for the ellipse
   let cx = x + w / 2;
   let cy = y + h / 2;
   let left = x;
@@ -421,6 +461,7 @@ function drawCircleKristien2(x, y, w, h) {
   let startR = 80;
   let layerGap = 10;
 
+   // Draw several layers of shapes (circles, rectangles, triangles) in rings
   for (let layer = 0; layer < maxLayers; layer++) {
     let r = startR - layer * layerGap; 
     let count = 40 + layer * 5; 
@@ -444,6 +485,7 @@ function drawCircleKristien2(x, y, w, h) {
     }
   }
 
+  // Draw a eye-like shape in the center using bezier curves
   fill('yellow');
   stroke('#111111');     
   strokeWeight(4); 
@@ -453,16 +495,19 @@ function drawCircleKristien2(x, y, w, h) {
   bezierVertex(cx + w * 0.2, bottom, cx - w * 0.2, bottom, left, cy);
   endShape(CLOSE);
 
+  // multi-color eyeball in the center
   let eyeRadius = min(w, h) / 1.5;
-  drawMultiColorEyeball(cx, cy, eyeRadius);
+  drawMultiColorEyecriclepattern(cx, cy, eyeRadius);
 
+  //white lines in the center of the eye
   stroke('#ffffff');
   strokeWeight(2);
   line(cx - 4, cy, cx + 4, cy);
   line(cx, cy - 4, cx, cy + 9); 
 }
 
-function drawMultiColorEyeball(cx, cy, maxRadius) {
+// colored circles to form an eyeball
+function drawMultiColorEyecriclepattern(cx, cy, maxRadius) {
   let colors = [
     '#90d4ff',  
     '#3e9efc', 
